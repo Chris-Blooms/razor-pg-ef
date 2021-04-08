@@ -12,13 +12,14 @@ namespace razor_pg_ef.Pages.Games
     public class IndexModel : PageModel
     {
         private readonly StoreGameContext _context;
+        public string TitleFilter { get; set; }
 
         public IndexModel(StoreGameContext context)
         {
             _context = context;
         }
 
-        public IList<Game> Game { get;set; }
+        public IList<Game> Game { get; set; }
 
         public async Task OnGetAsync()
         {

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using razor_pg_ef.Models;
 
 namespace razor_pg_ef.Pages.Games
@@ -12,16 +13,25 @@ namespace razor_pg_ef.Pages.Games
     public class DetailsModel : PageModel
     {
         private readonly StoreGameContext _context;
+        [BindProperty(Name = "msg", SupportsGet = true)]
+        public string Message { get; set; } = "";
 
-        public DetailsModel(StoreGameContext context)
+        [FromQuery(Name = "release-date")]
+        public DateTime Date { get; set; } = DateTime.Now;
+
+        private readonly ILogger<DetailsModel> _logger;
+        public DetailsModel(StoreGameContext context, ILogger<DetailsModel> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public Game Game { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            _logger.Log(LogLevel.Information, Request.Query.ToString());
+
             if (id == null)
             {
                 return NotFound();
