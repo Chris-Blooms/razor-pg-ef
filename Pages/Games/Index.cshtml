@@ -11,6 +11,18 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+<form>
+    <p>
+        Filter Titles: <input type="text" asp-for="TitleFilter" />
+        <select asp-for="Before">
+            <option value="true">Before</option>
+            <option value="false">After</option>
+        </select>
+        <input type="date" value='@Model.ReleaseDate.ToString("yyyy-MM-dd")' asp-for="ReleaseDate" />
+        <input type="submit" value="Filter">
+
+    </p>
+</form>
 <table class="table">
     <thead>
         <tr>
